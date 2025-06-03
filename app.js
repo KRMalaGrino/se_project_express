@@ -12,8 +12,18 @@ mongoose
   })
   .catch(console.error);
 
+const routers = require("./routes");
+
 app.use(express.json());
+app.use(routes);
 app.use("/", mainRouter);
+app.use((req, res, next) => {
+  // paste the _id of the test user created in the previous step in postman
+  req.user = {
+    _id: "",
+  };
+  next();
+});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
