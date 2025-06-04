@@ -12,4 +12,7 @@ router.post("/", createItem); // createItem
 router.put("/:itemId", updateItem); // updateItem
 router.delete("/:itemId", deleteItem); // deleteItem
 
+router.put("/items/:itemId/likes", likeItem); // likeItem
+router.delete("/items/:itemId/likes", dislikeItem); // unlike and item
+
 module.exports = router;

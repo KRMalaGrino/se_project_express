@@ -50,9 +50,33 @@ const deleteItem = (req, res) => {
     });
 };
 
+// like item
+likeItem = (req, res) =>
+  ClothingItem.findByIdAndUpdate(
+    req.params.itemId,
+    { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
+    { new: true }
+  ).catch((e) => {
+    res.status(500).send({ message: "Error from likeItem", e });
+  });
+//...
+
+// unlike item
+dislikeItem = (req, res) =>
+  ClothingItem.findByIdAndUpdate(
+    req.params.itemId,
+    { $pull: { likes: req.user._id } }, // remove _id from the array
+    { new: true }
+  ).catch((e) => {
+    res.status(500).send({ message: "Error from dislikeItem", e });
+  });
+//...
+
 module.exports = {
   createItem,
   getItems,
   updateItem,
   deleteItem,
+  likeItem,
+  dislikeItem,
 };
