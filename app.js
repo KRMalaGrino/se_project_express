@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const mainRouter = require("./routes/index");
+const routers = require("./routes");
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -12,17 +12,18 @@ mongoose
   })
   .catch(console.error);
 
-const routers = require("./routes");
-
 app.use(express.json());
-app.use(routes);
-app.use("/", mainRouter);
 app.use((req, res, next) => {
-  // paste the _id of the test user created in the previous step in postman
   req.user = {
-    _id: "",
+    _id: "6837f9a4e8a13c4fdca86e7d",
   };
   next();
+});
+app.use("/", routers);
+
+// handles unknown routes
+app.use((req, res) => {
+  res.status(404).send({ message: "Requested resource not found" });
 });
 
 app.listen(PORT, () => {

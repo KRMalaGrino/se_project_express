@@ -1,6 +1,5 @@
 const User = require("../models/user");
 
-// GET /users
 const getUsers = (req, res) => {
   User.find({})
     .then((users) => res.status(200).send(users))
@@ -8,6 +7,23 @@ const getUsers = (req, res) => {
       console.error(err);
       if (err.name === "ValidationError") {
         return res.status(400).send({ message: err.message });
+      }
+      return res.status(500).send({ message: err.message });
+    });
+};
+
+const getUserById = (req, res) => {
+  const { userId } = req.params;
+
+  User.findById(userId)
+    .orFail()
+    .then((user) => res.status(200).send(user))
+    .catch((err) => {
+      console.error(err);
+      if (err.name === "DocumentNotFoundError") {
+        // ...
+      } else if (err.name === "CastError") {
+        // handle the. cast error
       }
       return res.status(500).send({ message: err.message });
     });
@@ -22,22 +38,6 @@ const createUser = (req, res) => {
       console.error(err);
       if (err.name === "ValidationError") {
         return res.status(400).send({ message: err.message });
-      }
-      return res.status(500).send({ message: err.message });
-    });
-};
-
-const getUserById = (req, res) => {
-  const { userId } = req.params;
-  User.findById(userId)
-    .orFail()
-    .then((user) => res.status(200).send(user))
-    .catch((err) => {
-      console.error(err);
-      if (err.name === "DocumentNotFoundError") {
-        // ...
-      } else if (err.name === "CastError") {
-        // handle the. cast error
       }
       return res.status(500).send({ message: err.message });
     });
