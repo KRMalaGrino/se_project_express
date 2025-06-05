@@ -3,7 +3,7 @@ const clothingItems = require("./clothingItems");
 const userRouter = require("./users");
 
 router.use("/users", userRouter);
-router.use("/clothing-items", clothingItems);
+router.use("/items", clothingItems);
 
 // 404 for unknown subroutes
 router.use((req, res) => {
