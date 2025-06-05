@@ -1,4 +1,4 @@
-# WTWR (Express Project)
+# WTWR : Back End
 
 This is the backend side of the WTWR website / application for the computer or phone . The app recommends the user what to wear according to the current weather at the current location displayed . Users can upload new apparel items to there profile for different weather types .
 
