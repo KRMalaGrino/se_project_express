@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const userRouter = require("./routes/users");
-const clothingItemsRouter = require("./routes/clothingItems");
+const router = require("./routes");
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -20,8 +19,7 @@ app.use((req, res, next) => {
   };
   next();
 });
-app.use("/users", userRouter);
-app.use("/clothing-items", clothingItemsRouter);
+app.use("/", router);
 
 // handles unknown routes
 app.use((req, res) => {

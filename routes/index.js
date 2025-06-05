@@ -1,9 +1,12 @@
 const router = require("express").Router();
-const clothingItem = require("./clothingItems");
+const clothingItems = require("./clothingItems");
 const userRouter = require("./users");
 
 router.use("/users", userRouter);
+router.use("/clothing-items", clothingItems);
+
+// 404 for unknown subroutes
 router.use((req, res) => {
-  res.status(500).send({ message: "Router not found" });
+  res.status(404).send({ message: "Router not found" });
 });
 module.exports = router;
