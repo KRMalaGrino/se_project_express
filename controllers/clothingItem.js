@@ -9,10 +9,8 @@ const {
 const getItems = (req, res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
-    .catch((err) => {
-      res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "Get Items Failed", err });
+    .catch(() => {
+      res.status(INTERNAL_SERVER_ERROR).send({ message: "Get Items Failed" });
     });
 };
 
@@ -29,7 +27,7 @@ const createItem = (req, res) => {
       }
       return res
         .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "Error from createItem", err });
+        .send({ message: "Error from createItem" });
     });
 };
 
@@ -53,7 +51,7 @@ const deleteItem = (req, res) => {
       }
       return res
         .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "Error from deleteItem", err });
+        .send({ message: "Error from deleteItem" });
     });
 };
 
@@ -78,7 +76,9 @@ const likeItem = (req, res) =>
       if (err.name === "CastError") {
         return res.status(BAD_REQUEST).send({ message: "Invalid item ID" });
       }
-      return res.status(500).send({ message: "Error from likeItem", err });
+      return res
+        .status(INTERNAL_SERVER_ERROR)
+        .send({ message: "Error from likeItem" });
     });
 
 // dislike item
@@ -104,7 +104,7 @@ const dislikeItem = (req, res) =>
       }
       return res
         .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "Error from likeItem", err });
+        .send({ message: "Error from likeItem" });
     });
 
 module.exports = {
