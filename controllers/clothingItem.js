@@ -41,9 +41,9 @@ const deleteItem = (req, res) => {
       error.statusCode = NOT_FOUND;
       throw error;
     })
-    .then(() => res.status(204).send({}))
+    .then((item) => res.status(200).send({ data: item }))
     .catch((err) => {
-      if (err.message === "NotFound") {
+      if (err.message === "Item not found") {
         return res.status(NOT_FOUND).send({ message: "Item not found" });
       }
       if (err.name === "CastError") {
@@ -62,11 +62,6 @@ const likeItem = (req, res) =>
     { $addToSet: { likes: req.user._id } }, // add _id to the array if it's not there yet
     { new: true }
   )
-    .orFail(() => {
-      const error = new Error("Item not found");
-      error.statusCode = NOT_FOUND;
-      throw error;
-    })
     .then((item) =>
       item
         ? res.status(200).send({ data: item })
@@ -88,11 +83,6 @@ const dislikeItem = (req, res) =>
     { $pull: { likes: req.user._id } }, // remove _id from the array
     { new: true }
   )
-    .orFail(() => {
-      const error = new Error("Item not found");
-      error.statusCode = NOT_FOUND;
-      throw error;
-    })
     .then((item) =>
       item
         ? res.status(200).send({ data: item })

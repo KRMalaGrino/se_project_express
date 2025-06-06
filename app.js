@@ -1,7 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const router = require("./routes");
-const { BAD_REQUEST } = require("./utils/errors");
 
 const app = express();
 const { PORT = 3001 } = process.env;
@@ -21,11 +20,6 @@ app.use((req, next) => {
   next();
 });
 app.use("/", router);
-
-// handles unknown routes
-app.use((res) => {
-  res.status(BAD_REQUEST).send({ message: "Requested resource not found" });
-});
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
