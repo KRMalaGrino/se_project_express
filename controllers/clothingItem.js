@@ -6,7 +6,7 @@ const {
 } = require("../utils/errors");
 
 // read items
-const getItems = (req, res) => {
+const getItems = (res) => {
   ClothingItem.find({})
     .then((items) => res.status(200).send(items))
     .catch(() => {

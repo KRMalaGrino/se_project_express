@@ -5,7 +5,7 @@ const {
   INTERNAL_SERVER_ERROR,
 } = require("../utils/errors");
 
-const getUsers = (req, res) => {
+const getUsers = (res) => {
   User.find({})
     .then((users) => res.status(200).send(users))
     .catch((err) => {

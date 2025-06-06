@@ -14,7 +14,7 @@ mongoose
   .catch(console.error);
 
 app.use(express.json());
-app.use((req, res, next) => {
+app.use((req, next) => {
   req.user = {
     _id: "6837f9a4e8a13c4fdca86e7d",
   };
@@ -23,7 +23,7 @@ app.use((req, res, next) => {
 app.use("/", router);
 
 // handles unknown routes
-app.use((req, res) => {
+app.use((res) => {
   res.status(BAD_REQUEST).send({ message: "Requested resource not found" });
 });
 

@@ -6,7 +6,7 @@ router.use("/users", userRouter);
 router.use("/items", clothingItems);
 
 // 404 for unknown subroutes
-router.use((req, res) => {
+router.use((res) => {
   res.status(404).send({ message: "Router not found" });
 });
 module.exports = router;
