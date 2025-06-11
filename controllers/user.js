@@ -1,6 +1,7 @@
 const User = require("../models/user");
 const {
   BAD_REQUEST,
+  UNAUTHORIZED,
   NOT_FOUND,
   CONFLICT,
   INTERNAL_SERVER_ERROR,
@@ -71,4 +72,17 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { getUsers, createUser, getUserById };
+const login = (req, res) => {
+  const { email, password } = req.body;
+
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      res.send({ message: "Login successful!" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(UNAUTHORIZED).send({ message: "Invalid credentials" });
+    });
+};
+
+module.exports = { getUsers, createUser, getUserById, login };
