@@ -2,6 +2,7 @@ const User = require("../models/user");
 const {
   BAD_REQUEST,
   NOT_FOUND,
+  CONFLICT,
   INTERNAL_SERVER_ERROR,
 } = require("../utils/errors");
 
@@ -41,12 +42,26 @@ const getUserById = (req, res) => {
 };
 
 const createUser = (req, res) => {
-  const { name, avatar } = req.body;
+  const { name, avatar, email, password } = req.body;
 
-  User.create({ name, avatar })
-    .then((user) => res.status(201).send(user))
+  bcrypt
+    .hash(password, 10)
+    .then((hash) => {
+      return User.create({ name, avatar, email, password: hash });
+    })
+    .then((user) =>
+      res.status(201).send({
+        _id: user._id,
+        name: user.name,
+        avatar: user.avatar,
+        email: user.email,
+      })
+    )
     .catch((err) => {
       console.error(err);
+      if (err.code === 11000) {
+        return res.status(CONFLICT).send({ message: "Email already exists" });
+      }
       if (err.name === "ValidationError") {
         return res.status(BAD_REQUEST).send({ message: err.message });
       }
