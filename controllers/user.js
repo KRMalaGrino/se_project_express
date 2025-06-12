@@ -7,17 +7,6 @@ const {
   INTERNAL_SERVER_ERROR,
 } = require("../utils/errors");
 
-const getUsers = (req, res) => {
-  User.find({})
-    .then((users) => res.status(200).send(users))
-    .catch((err) => {
-      console.error(err);
-      return res
-        .status(INTERNAL_SERVER_ERROR)
-        .send({ message: "An error has occurred on the server." });
-    });
-};
-
 const getUserById = (req, res) => {
   const { userId } = req.params;
 
@@ -39,6 +28,19 @@ const getUserById = (req, res) => {
       return res
         .status(INTERNAL_SERVER_ERROR)
         .send({ message: "An error has occurred on the server." });
+    });
+};
+
+const login = (req, res) => {
+  const { email, password } = req.body;
+
+  User.findUserByCredentials(email, password)
+    .then((user) => {
+      res.send({ message: "Login successful!" });
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(UNAUTHORIZED).send({ message: "Invalid credentials" });
     });
 };
 
@@ -72,17 +74,4 @@ const createUser = (req, res) => {
     });
 };
 
-const login = (req, res) => {
-  const { email, password } = req.body;
-
-  User.findUserByCredentials(email, password)
-    .then((user) => {
-      res.send({ message: "Login successful!" });
-    })
-    .catch((err) => {
-      console.error(err);
-      res.status(UNAUTHORIZED).send({ message: "Invalid credentials" });
-    });
-};
-
-module.exports = { getUsers, createUser, getUserById, login };
+module.exports = { createUser, login, getUserById };
