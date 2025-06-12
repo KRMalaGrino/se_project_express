@@ -1,3 +1,6 @@
+const jwt = require("jsonwebtoken");
+const JWT_SECRET = require("../utils/config");
+
 const User = require("../models/user");
 const {
   BAD_REQUEST,
@@ -8,7 +11,7 @@ const {
 } = require("../utils/errors");
 
 const getCurrentUser = (req, res) => {
-  const { userId } = req.user;
+  const userId = req.user._id;
 
   User.findById(userId)
     .orFail(() => {
@@ -36,7 +39,11 @@ const login = (req, res) => {
 
   User.findUserByCredentials(email, password)
     .then((user) => {
-      res.send({ message: "Login successful!" });
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
+        expiresIn: "7d",
+      });
+
+      res.send({ token });
     })
     .catch((err) => {
       console.error(err);
@@ -53,8 +60,8 @@ const createUser = (req, res) => {
       return User.create({ name, avatar, email, password: hash });
     })
     .then((user) => {
-      const user = user.toObject(); // turns the mongoose schema into a normal javascript object
-      delete user.password; // deletes the user password
+      const userObj = user.toObject(); // turns the mongoose schema into a normal javascript object
+      delete userObj.password; // deletes the user password
 
       res.status(201).send({
         _id: user._id,
@@ -79,6 +86,7 @@ const createUser = (req, res) => {
 
 const updateProfile = (req, res) => {
   const { name, avatar } = req.body;
+  const userId = req.user._id;
 
   User.findByIdAndUpdate(
     userId,

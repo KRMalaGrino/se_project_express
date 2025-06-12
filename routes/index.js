@@ -4,7 +4,7 @@ const { NOT_FOUND } = require("../utils/errors");
 const clothingItems = require("./clothingItems");
 const userRouter = require("./users");
 const { login, createUser } = require("../controllers/user");
-const { auth } = require("../middlewares/auth");
+const auth = require("../middlewares/auth");
 
 router.post("/signin", login); // unprotected
 router.post("/signup", createUser); // unprotected
