@@ -52,14 +52,17 @@ const createUser = (req, res) => {
     .then((hash) => {
       return User.create({ name, avatar, email, password: hash });
     })
-    .then((user) =>
+    .then((user) => {
+      const user = user.toObject(); // turns the mongoose schema into a normal javascript object
+      delete user.password; // deletes the user password
+
       res.status(201).send({
         _id: user._id,
         name: user.name,
         avatar: user.avatar,
         email: user.email,
-      })
-    )
+      });
+    })
     .catch((err) => {
       console.error(err);
       if (err.code === 11000) {
