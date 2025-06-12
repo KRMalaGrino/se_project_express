@@ -7,8 +7,8 @@ const {
   INTERNAL_SERVER_ERROR,
 } = require("../utils/errors");
 
-const getUserById = (req, res) => {
-  const { userId } = req.params;
+const getCurrentUser = (req, res) => {
+  const { userId } = req.user;
 
   User.findById(userId)
     .orFail(() => {
@@ -74,4 +74,4 @@ const createUser = (req, res) => {
     });
 };
 
-module.exports = { createUser, login, getUserById };
+module.exports = { createUser, login, getCurrentUser };
