@@ -1,15 +1,20 @@
 const router = require("express").Router();
+
+const { NOT_FOUND } = require("../utils/errors");
 const clothingItems = require("./clothingItems");
 const userRouter = require("./users");
-const { NOT_FOUND } = require("../utils/errors");
+const { login, createUser } = require("../controllers/user");
+const { auth } = require("../middlewares/auth");
 
-router.use("/users", userRouter);
-router.use("/items", clothingItems);
-router.post("/signin", login);
-router.post("/signup", createUser);
+router.post("/signin", login); // unprotected
+router.post("/signup", createUser); // unprotected
+router.use("/items", clothingItems); // protected internally in clothingItems.js
+
+router.use("/users", auth, userRouter); // protected route with auth
 
 // 404 for unknown subroutes
 router.use((req, res) => {
   res.status(NOT_FOUND).send({ message: "Router not found" });
 });
+
 module.exports = router;
