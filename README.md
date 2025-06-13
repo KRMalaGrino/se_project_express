@@ -12,7 +12,7 @@ We created two Mongoose schemas, which were connected to controllers and routed 
  
 - https://drive.google.com/file/d/1oTgayC0XJAMyiY-F9K4zJnzmUAM0a2ZD/view?usp=drive_link
 
-**Spots Video Demo**
+## Spots Video Demo
 
 -------------------------------------------------------------------
 
