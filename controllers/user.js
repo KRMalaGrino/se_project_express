@@ -1,4 +1,5 @@
 const jwt = require("jsonwebtoken");
+const bcrypt = require("bcryptjs");
 const JWT_SECRET = require("../utils/config");
 
 const User = require("../models/user");
@@ -56,9 +57,7 @@ const createUser = (req, res) => {
 
   bcrypt
     .hash(password, 10)
-    .then((hash) => {
-      return User.create({ name, avatar, email, password: hash });
-    })
+    .then((hash) => User.create({ name, avatar, email, password: hash }))
     .then((user) => {
       const userObj = user.toObject(); // turns the mongoose schema into a normal javascript object
       delete userObj.password; // deletes the user password
