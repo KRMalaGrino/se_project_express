@@ -15,6 +15,11 @@ mongoose
 
 app.use(express.json());
 app.use(cors());
+
+req.user = {
+  _id: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODRjM2JjY2E3MTBlYjg3NzdmZmY5M2EiLCJpYXQiOjE3NDk5NTc3MTUsImV4cCI6MTc1MDU2MjUxNX0.1d4nRw0G6DP7USmtWthmAST-QENsqW8d6q9SCWKvXBE",
+};
+
 app.use("/", router);
 
 app.listen(PORT, () => {
