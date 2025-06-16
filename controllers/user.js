@@ -38,7 +38,13 @@ const getCurrentUser = (req, res) => {
 const login = (req, res) => {
   const { email, password } = req.body;
 
-  User.findUserByCredentials(email, password)
+  if (!email || !password) {
+    return res
+      .status(BAD_REQUEST)
+      .send({ message: "Email and password are required" });
+  }
+
+  return User.findUserByCredentials(email, password)
     .then((user) => {
       const token = jwt.sign({ _id: user._id }, JWT_SECRET, {
         expiresIn: "7d",
@@ -48,7 +54,14 @@ const login = (req, res) => {
     })
     .catch((err) => {
       console.error(err);
-      res.status(UNAUTHORIZED).send({ message: "Invalid credentials" });
+      if (err.message === "Incorrect email or password") {
+        return res
+          .status(UNAUTHORIZED)
+          .send({ message: "Incorrect email or password" });
+      }
+      return res
+        .status(INTERNAL_SERVER_ERROR)
+        .send({ message: "An error has occurred on the server." });
     });
 };
 
@@ -63,10 +76,10 @@ const createUser = (req, res) => {
       delete userObj.password; // deletes the user password
 
       res.status(201).send({
-        _id: user._id,
-        name: user.name,
-        avatar: user.avatar,
-        email: user.email,
+        _id: userObj._id,
+        name: userObj.name,
+        avatar: userObj.avatar,
+        email: userObj.email,
       });
     })
     .catch((err) => {
