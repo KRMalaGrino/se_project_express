@@ -75,7 +75,7 @@ const likeItem = (req, res) =>
   )
     .then((item) =>
       item
-        ? res.status(200).send({ data: item })
+        ? res.status(200).send(item)
         : res.status(NOT_FOUND).send({ message: "Item not found" })
     )
     .catch((err) => {
@@ -96,7 +96,7 @@ const dislikeItem = (req, res) =>
   )
     .then((item) =>
       item
-        ? res.status(200).send({ data: item })
+        ? res.status(200).send(item)
         : res.status(NOT_FOUND).send({ message: "Item not found" })
     )
     .catch((err) => {
