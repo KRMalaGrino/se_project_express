@@ -1,6 +1,6 @@
 const router = require("express").Router();
 
-const { NOT_FOUND } = require("../utils/errors");
+const { NotFoundError } = require("../utils/customErrors");
 const clothingItems = require("./clothingItems");
 const userRouter = require("./users");
 const { login, createUser } = require("../controllers/user");
@@ -14,7 +14,7 @@ router.use("/users", auth, userRouter); // protected route with auth
 
 // 404 for unknown subroutes
 router.use((req, res) => {
-  res.status(NOT_FOUND).send({ message: "Router not found" });
+  return next(new NotFoundError("Router not found"));
 });
 
 module.exports = router;
