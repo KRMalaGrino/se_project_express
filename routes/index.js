@@ -13,7 +13,7 @@ router.use("/items", clothingItems); // protected internally in clothingItems.js
 router.use("/users", auth, userRouter); // protected route with auth
 
 // 404 for unknown subroutes
-router.use((req, res) => {
+router.use((req, res, next) => {
   return next(new NotFoundError("Router not found"));
 });
 
