@@ -5,10 +5,10 @@ const {
   updateProfile,
   createUser,
 } = require("../controllers/user");
-const createUserValidation = require("../middlewares/validation");
+const validation = require("../middlewares/validation");
 
 router.get("/me", getCurrentUser);
 router.patch("/me", updateProfile);
-router.post("/", createUserValidation, createUser);
+router.post("/", validation.createUserValidation, createUser);
 
 module.exports = router;
