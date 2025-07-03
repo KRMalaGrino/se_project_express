@@ -15,8 +15,8 @@ router.get("/", getItems); // readItem
 
 router.use(auth); // protected routes below
 router.post("/", validation.clothingItemValidation, createItem); // createItem with validation
-router.delete("/:itemId", deleteItem); // deleteItem
-router.put("/:itemId/likes", likeItem); // likeItem
-router.delete("/:itemId/likes", dislikeItem); // unlike and item
+router.delete("/:itemId", validation.IdValidation, deleteItem); // deleteItem
+router.put("/:itemId/likes", validation.IdValidation, likeItem); // likeItem
+router.delete("/:itemId/likes", validation.IdValidation, dislikeItem); // unlike and item
 
 module.exports = router;

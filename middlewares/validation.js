@@ -1,5 +1,4 @@
-const { Joi, celebrate } = require("celebrate");
-const validator = require("validator");
+const { Joi, celebrate, Segments } = require("celebrate");
 
 const clothingItemValidation = celebrate({
   body: Joi.object().keys({
@@ -18,4 +17,22 @@ const createUserValidation = celebrate({
   }),
 });
 
-module.exports = { clothingItemValidation, createUserValidation };
+const IdValidation = celebrate({
+  [Segments.PARAMS]: Joi.object().keys({
+    itemId: Joi.string().hex().length(24).required(),
+  }),
+});
+
+const loginAuthentication = celebrate({
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  }),
+});
+
+module.exports = {
+  clothingItemValidation,
+  createUserValidation,
+  IdValidation,
+  loginAuthentication,
+};
