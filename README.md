@@ -8,9 +8,11 @@ This was my first project using Express.js. We used both Express and Mongoose to
 
 We created two Mongoose schemas, which were connected to controllers and routed through app.js using Express routers. The project was developed in Visual Studio Code (VSCode).
 
-**Frontend link**
+**Frontend links**
 
-(git clone) https://github.com/KRMalaGrino/se_project_react
+https://krmalagrino.theoceanforest.com/
+https://www.krmalagrino.theoceanforest.com/
+https://api.krmalagrino.theoceanforest.com/
 
 ## Pictures, GIFs, & screenshots
 
