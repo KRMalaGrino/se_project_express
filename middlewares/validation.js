@@ -61,9 +61,24 @@ const loginAuthentication = celebrate({
   }),
 });
 
+const updateUserValidation = celebrate({
+  body: joi.object().keys({
+    name: Joi.string().min(2).max(30).required().messages({
+      "string.min": "Name must be at least 2 characters long",
+      "string.max": "Name must be at most 30 characters long",
+      "string.empty": "The 'name' field must be filled in",
+    }),
+    avatar: Joi.string().uri().required().messages({
+      "string.uri": "The 'avatar' field must be a valid URL",
+      "string.empty": "The 'avatar' field must be filled in",
+    }),
+  }),
+});
+
 module.exports = {
   clothingItemValidation,
   createUserValidation,
   IdValidation,
   loginAuthentication,
+  updateUserValidation,
 };
