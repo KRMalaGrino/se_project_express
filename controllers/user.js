@@ -3,10 +3,10 @@ const bcrypt = require("bcryptjs");
 const JWT_SECRET = require("../utils/config");
 
 const User = require("../models/user");
-const { ConflictError } = require("../utils/customErrors");
+const { ConflictError } = require("../utils/errors/conflictError");
 const { BadRequestError } = require("../utils/errors/badRequestError");
 const { UnauthorizedError } = require("../utils/errors/unauthorizedError");
-const { NotFoundError } = require("../utils/errors/NotFoundError");
+const { NotFoundError } = require("../utils/errors/notFoundError");
 
 const getCurrentUser = (req, res, next) => {
   const userId = req.user._id;
