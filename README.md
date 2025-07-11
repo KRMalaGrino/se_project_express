@@ -21,9 +21,3 @@ https://api.krmalagrino.theoceanforest.com/
 ## WTWR Video Demo
 
 ---
-
-## Deployment
-
-This project is deployed on GitHub Pages:
-
-- https://github.com/KRMalaGrino/se_project_express
